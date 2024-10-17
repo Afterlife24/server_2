@@ -24,13 +24,13 @@ app.use(cors());
 // Endpoint to send the order
 app.post("/sendOrder", async (req, res) => {
 
-    const { tableNumber, dishes, tokenId } = req.body; // Receive tokenId from the request body
+    const { tableNumber, dishes} = req.body; // Receive tokenId from the request body
     const newOrder = {
         tableNumber,
         dishes,
         createdAt: serverTimestamp(),
         isDelivered: false,
-        tokenId // Store the received tokenId in the new order
+        // tokenId // Store the received tokenId in the new order
     };
 
     try {
@@ -38,8 +38,8 @@ app.post("/sendOrder", async (req, res) => {
         const docRef = await addDoc(collection(db, 'orders'), newOrder);
 
         // Send a JSON response indicating success
-        console.log("Sending response:", { message: "Order received successfully", tokenId });
-        res.status(200).json({ message: "Order received successfully", tokenId });
+        console.log("Sending response:", { message: "Order received successfully" });
+        res.status(200).json({ message: "Order received successfully" });
     } catch (error) {
         console.error("Error storing order:", error);
         res.status(500).json({ error: "Error: " + error.message });
@@ -59,10 +59,10 @@ app.post("/markAsDelivered", async (req, res) => {
     }
 });
 
-// const PORT = 5000;
-// app.listen(PORT, function() { 
-//     console.log(`Server is running on port ${PORT}`);
-// });
+const PORT = 5000;
+app.listen(PORT, function() { 
+    console.log(`Server is running on port ${PORT}`);
+});
 
 
-module.exports = app;
+// module.exports = app;
